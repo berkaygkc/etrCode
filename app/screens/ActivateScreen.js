@@ -1,24 +1,38 @@
 import React, { useState } from 'react'
-import { StyleSheet } from 'react-native'
-import Background from '../components/Background'
-import Logo from '../components/Logo'
-import Header from '../components/Header'
-import Button from '../components/Button'
-import TextInput from '../components/TextInput'
-import { emailValidator } from '../helpers/emailValidator'
-import { passwordValidator } from '../helpers/passwordValidator'
-import { nameValidator } from '../helpers/nameValidator'
+import { StyleSheet, Alert } from 'react-native'
+import Background from '../components/activate/Background'
+import Logo from '../components/activate/Logo'
+import Header from '../components/activate/Header'
+import Button from '../components/activate/Button'
+import TextInput from '../components/activate/TextInput'
+import { compCodeValidator } from '../helpers/compCodeValidator'
+import { HESCodeValidator } from '../helpers/HESCodeValidator'
+import { activateCodeValidator } from '../helpers/activateCodeValidator'
 
 export default function ActivateScreen({ navigation }) {
-  const [name, setName] = useState({ value: '', error: '' })
-  const [email, setEmail] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
+  const [compCode, setCompCode] = useState({ value: '', error: '' })
+  const [activateCode, setActivateCode] = useState({ value: '', error: '' })
+  const [HESCode, setHESCode] = useState({ value: '', error: '' })
 
   const onSignUpPressed = () => {
-    const nameError = nameValidator(name.value)
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
-    
+    const compCodeError = compCodeValidator(compCode.value)
+    const activateCodeError = activateCodeValidator(activateCode.value)
+    const HESCodeError = HESCodeValidator(HESCode.value)
+    /* if (compCodeError || activateCodeError || HESCodeError) {
+      setCompCode({ ...compCode, error: compCodeError })
+      setActivateCode({ ...activateCode, error: activateCodeError })
+      setHESCode({ ...HESCode, error: HESCodeError })
+      return
+    } */
+    Alert.alert(
+      "Başarılı",
+      "Aktivasyon Başarılı!",
+      [
+        {
+          text: "Tamam"
+        }
+      ]
+      )
     navigation.navigate('Home')
   }
 
@@ -29,18 +43,18 @@ export default function ActivateScreen({ navigation }) {
       <TextInput
         label="Firma Kodu"
         returnKeyType="next"
-        value={name.value}
-        onChangeText={(text) => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        value={compCode.value}
+        onChangeText={(text) => setCompCode({ value: text, error: '' })}
+        error={!!compCode.error}
+        errorText={compCode.error}
       />
       <TextInput
         label="Aktivasyon Kodu"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
+        value={activateCode.value}
+        onChangeText={(text) => setActivateCode({ value: text, error: '' })}
+        error={!!activateCode.error}
+        errorText={activateCode.error}
         autoCapitalize="none"
         autoCompleteType="email"
         textContentType="emailAddress"
@@ -49,16 +63,15 @@ export default function ActivateScreen({ navigation }) {
       <TextInput
         label="Hes Kodu"
         returnKeyType="done"
-        value={password.value}
-        onChangeText={(text) => setPassword({ value: text, error: '' })}
-        error={!!password.error}
-        errorText={password.error}
-        secureTextEntry
+        value={HESCode.value}
+        onChangeText={(text) => setHESCode({ value: text, error: '' })}
+        error={!!HESCode.error}
+        errorText={HESCode.error}
       />
       <Button
         mode="contained"
         onPress={onSignUpPressed}
-        style={{ marginTop: 24}}
+        style={{ marginTop: 24, backgroundColor: '#E94057'}}
       >
         Aktif Et
       </Button>
