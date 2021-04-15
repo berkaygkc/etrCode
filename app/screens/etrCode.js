@@ -5,7 +5,10 @@ import Button from '../components/activate/Button';
 import CountDown from 'react-native-countdown-component';
 
 
-
+function refreshPage(){
+    console.log("test")
+    return
+}
 
 function etrCode(props) {    
     return (
@@ -32,6 +35,7 @@ function etrCode(props) {
                 />
                 <Button
                 mode="contained"
+                onPress={refreshPage()}
                 style={styles.button}
                 >
                     Yenile

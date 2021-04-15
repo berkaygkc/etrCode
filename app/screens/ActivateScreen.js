@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { StyleSheet, Alert } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { StyleSheet, Alert} from 'react-native'
 import Background from '../components/activate/Background'
 import Logo from '../components/activate/Logo'
 import Header from '../components/activate/Header'
@@ -8,11 +8,43 @@ import TextInput from '../components/activate/TextInput'
 import { compCodeValidator } from '../helpers/compCodeValidator'
 import { HESCodeValidator } from '../helpers/HESCodeValidator'
 import { activateCodeValidator } from '../helpers/activateCodeValidator'
+import AsyncStorage from '@react-native-community/async-storage'
 
 export default function ActivateScreen({ navigation }) {
   const [compCode, setCompCode] = useState({ value: '', error: '' })
   const [activateCode, setActivateCode] = useState({ value: '', error: '' })
   const [HESCode, setHESCode] = useState({ value: '', error: '' })
+  const [infos, setInfos] = useState({info:{companyCode:'',actCode:'',HESCodee:''}})
+
+  useEffect(() => {
+    readData()
+  }) 
+
+  const storeData = async() => {
+    const company = compCode.value;
+    const activate = activateCode.value;
+    const hes = HESCode.value;
+    try {
+      await AsyncStorage.setItem('company', company);
+      await AsyncStorage.setItem('activate', activate);
+      await AsyncStorage.setItem('hes', hes);
+      await AsyncStorage.setItem('active', "1");
+    } catch (e){
+      console.log(e);
+    }
+  }
+
+  const readData = async() => {
+    try {
+      const value = await AsyncStorage.getItem('active');
+      console.log(value);
+      if (value !== null || value !== "0") {
+        navigation.navigate('Home')
+      }
+  } catch (e) {
+      // error reading value
+  }
+  }
 
   const onSignUpPressed = () => {
     const compCodeError = compCodeValidator(compCode.value)
@@ -24,6 +56,8 @@ export default function ActivateScreen({ navigation }) {
       setHESCode({ ...HESCode, error: HESCodeError })
       return
     } */
+    storeData()
+
     Alert.alert(
       "Başarılı",
       "Aktivasyon Başarılı!",
