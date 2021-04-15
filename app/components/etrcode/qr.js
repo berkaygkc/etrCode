@@ -14,10 +14,6 @@ const qrKodUret = (komut, gecerlilik, id, hescode) => {
     return hes;
 }
 
-function refreshPage() {
-  window.location.reload(false);
-}
-
 const Separator = () => (
   <View style={styles.separator} />
 );

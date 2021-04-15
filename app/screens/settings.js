@@ -1,16 +1,29 @@
 import AsyncStorage from '@react-native-community/async-storage';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView,View,Text,StyleSheet, Alert} from 'react-native';
 import Button from '../components/activate/Button';
-import Restart from 'fiction-expo-restart'
+import TextInput from '../components/activate/TextInput'
 
 function settings(props) {
+    const [hes, setHes] = useState(null)
+
+    useEffect(() => {
+        readData()
+      }) 
+
+    const readData = async() => {
+        try {
+          const value = await AsyncStorage.getItem('hes');
+          setHes(value);
+        } catch (e) {
+            console.log(e);
+        }
+      }
     const logOut = async() => {
         await AsyncStorage.removeItem('company');
         await AsyncStorage.removeItem('activate');
         await AsyncStorage.removeItem('hes');
         await AsyncStorage.removeItem('active');
-        Restart();
     }
 
     const areUSure = () => {
@@ -32,6 +45,13 @@ function settings(props) {
     return (
         <SafeAreaView>
         <View style={styles.container}>
+            <Text>HES KODUNUZ</Text>
+            <TextInput
+                label="HES"
+                returnKeyType="done"
+                value={hes}
+                onChangeText={(text) => setHes(text)}
+            />
             <Button
                 mode="contained"
                 onPress={areUSure}

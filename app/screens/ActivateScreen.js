@@ -38,7 +38,7 @@ export default function ActivateScreen({ navigation }) {
     try {
       const value = await AsyncStorage.getItem('active');
       console.log(value);
-      if (value !== null || value !== "0") {
+      if (value !== null) {
         navigation.navigate('Home')
       }
   } catch (e) {
