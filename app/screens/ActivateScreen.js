@@ -27,7 +27,7 @@ export default function ActivateScreen({ navigation }) {
     try {
       await AsyncStorage.setItem('company', company);
       await AsyncStorage.setItem('activate', activate);
-      await AsyncStorage.setItem('hes', hes);
+      await AsyncStorage.setItem('hes', hes.toUpperCase());
       await AsyncStorage.setItem('active', "1");
     } catch (e){
       console.log(e);

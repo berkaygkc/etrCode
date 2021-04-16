@@ -6,6 +6,7 @@ import TextInput from '../components/activate/TextInput'
 
 function settings(props) {
     const [hes, setHes] = useState(null)
+    const [tempHes, setTempHes] = useState(null)
 
     useEffect(() => {
         readData()
@@ -50,14 +51,21 @@ function settings(props) {
                 label="HES"
                 returnKeyType="done"
                 value={hes}
-                onChangeText={(text) => setHes(text)}
+                style={styles.text}
+                onChangeText={(text) => setTempHes(text)}
             />
             <Button
                 mode="contained"
-                onPress={areUSure}
-                style={styles.button}
+                style={styles.buttonConf}
                 >
-                    Çıkış Yap
+                    Güncelle
+            </Button>
+            <Button
+                mode="contained"
+                onPress={areUSure}
+                style={styles.buttonRed}
+                >
+                    Hesaptan Çık
             </Button>
         </View>
     </SafeAreaView>
@@ -70,7 +78,15 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         top: 25,
     },
-    button:{
+    text:{
+        width: '80%',
+    },
+    buttonConf:{
+        width: '80%',
+        marginTop: 24,
+        backgroundColor: 'green',
+    },
+    buttonRed:{
         width: '80%',
         marginTop: 24,
         backgroundColor: 'red',
